@@ -2,6 +2,7 @@ using UnityEngine;
 using StatePattern.Enemy.Bullet;
 using StatePattern.Main;
 using StatePattern.Player;
+using System;
 
 namespace StatePattern.Enemy
 {
@@ -14,12 +15,21 @@ namespace StatePattern.Enemy
         private float shootTimer;
         private float targetRotation;
         private PlayerController target;
-
+        private Transform opmTransform;
+        private OnePunchManStateMachine onePunchManStateMachine;
 
         public OnePunchManController(EnemyScriptableObject enemyScriptableObject) : base(enemyScriptableObject)
         {
             enemyView.SetController(this);
+            opmTransform = enemyView.transform;
+            CreateStateMachine();
             InitializeVariables();
+        }
+
+        private void CreateStateMachine()
+        {
+            onePunchManStateMachine = new OnePunchManStateMachine(this);
+            onePunchManStateMachine.ChangeState(OnePunchManState.IDLE);
         }
 
         private void InitializeVariables()
@@ -31,50 +41,14 @@ namespace StatePattern.Enemy
             shootTimer = enemyScriptableObject.RateOfFire;
         }
 
+        public Transform GetTransform() { return opmTransform; }
         public override void UpdateEnemy()
         {
             if (currentState == EnemyState.DEACTIVE)
                 return;
 
-            if(isIdle && !isRotating && !isShooting)
-            {
-                idleTimer -= Time.deltaTime;
-                if(idleTimer <= 0)
-                {
-                    isIdle = false;
-                    isRotating = true;
-                    targetRotation = (Rotation.eulerAngles.y + 180) % 360;
-                }
-            }
-
-            if(!isIdle && isRotating && !isShooting)
-            {
-                SetRotation(CalculateRotation());
-                if(IsRotationComplete())
-                {
-                    isIdle = true;
-                    isRotating = false;
-                    ResetTimer();
-                }
-            }
-
-            if(!isIdle && !isRotating && isShooting)
-            {
-                Quaternion desiredRotation = CalculateRotationTowardsPlayer();
-                SetRotation(RotateTowards(desiredRotation));
-                
-                if(IsFacingPlayer(desiredRotation))
-                {
-                    shootTimer -= Time.deltaTime;
-                    if (shootTimer <= 0)
-                    {
-                        shootTimer = enemyScriptableObject.RateOfFire;
-                        Shoot();
-                    }
-                }
-
-            }
-
+            base.PlayerEnteredRange(target);
+            onePunchManStateMachine.ChangeState(OnePunchManState.SHOOTING);
         }
 
         private void ResetTimer() => idleTimer = enemyScriptableObject.IdleTime;
@@ -106,9 +80,7 @@ namespace StatePattern.Enemy
 
         public override void PlayerExitedRange() 
         {
-            isIdle = true;
-            isRotating = false;
-            isShooting = false;
+            onePunchManStateMachine.ChangeState(OnePunchManState.IDLE);
         }
     }
 }
