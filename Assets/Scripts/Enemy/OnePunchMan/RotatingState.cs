@@ -9,30 +9,24 @@ public class RotatingState : IState
 
     private OnePunchManStateMachine stateMachine;
     private Transform ownerTransform;
-    private float targetAngle;
 
     public RotatingState(OnePunchManStateMachine _stateMachine) => stateMachine = _stateMachine;
 
     public void OnStateEnter()
     {
-        ownerTransform = Owner.GetTransform();
-        targetAngle = (ownerTransform.rotation.eulerAngles.y + 180) % 360;
+        ownerTransform = Owner.enemyTransform;
+        Owner.targetRotation = (ownerTransform.rotation.eulerAngles.y + 180) % 360;
     }
 
     public void OnUpdate()
     {
-        Owner.SetRotation(CalculateRotation());
-        if (RotationComplete())
+        Owner.SetRotation(Owner.CalculateRotation());
+        if (Owner.IsRotationComplete())
             stateMachine.ChangeState(OnePunchManState.IDLE);
     }
 
     public void OnStateExit()
     {
-        targetAngle = 0;
+        Owner.targetRotation = 0f;
     }
-
-    private Vector3 CalculateRotation()
-        => Vector3.up * Mathf.MoveTowardsAngle(ownerTransform.rotation.eulerAngles.y, targetAngle, 3f * Time.deltaTime);
-
-    private bool RotationComplete() => Mathf.Abs(Mathf.Abs(ownerTransform.rotation.eulerAngles.y) - Mathf.Abs(targetAngle)) == 0;
 }
