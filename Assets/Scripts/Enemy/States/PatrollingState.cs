@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace StatePattern.Enemy
 {
-    public class PatrollingState : IState
+    public class PatrollingState<T> : IState where T : EnemyController
     {
         public EnemyController Owner { get; set; }
-        private GenericStateMachine stateMachine;
+        private GenericStateMachine<T> stateMachine;
         private int currentPatrollingIndex = -1;
         private Vector3 destination;
 
-        public PatrollingState(GenericStateMachine stateMachine) => this.stateMachine = stateMachine;
+        public PatrollingState(GenericStateMachine<T> stateMachine) => this.stateMachine = stateMachine;
 
         public void OnStateEnter()
         {

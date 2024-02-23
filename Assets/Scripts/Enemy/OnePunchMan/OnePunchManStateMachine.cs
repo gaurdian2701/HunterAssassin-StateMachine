@@ -7,16 +7,16 @@ namespace StatePattern.Enemy
     {
         public OnePunchManStateMachine(OnePunchManController Owner) : base(Owner)
         {
-            CreateStates();
             this.Owner = Owner;
-            base.SetOwner();
+            CreateStates();
+            SetOwner();
         }
 
         private void CreateStates()
         {
-            States.Add(StateMachine.States.IDLE, new IdleState(this));
-            States.Add(StateMachine.States.ROTATING, new RotatingState(this));
-            States.Add(StateMachine.States.SHOOTING, new ShootingState(this));
+            States.Add(StateMachine.States.IDLE, new IdleState<OnePunchManController>(this));
+            States.Add(StateMachine.States.ROTATING, new RotatingState<OnePunchManController>(this));
+            States.Add(StateMachine.States.SHOOTING, new ShootingState<OnePunchManController>(this));
         }
     }
 }

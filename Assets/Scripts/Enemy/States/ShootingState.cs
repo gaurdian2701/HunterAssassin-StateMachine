@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace StatePattern.Enemy
 {
-    public class ShootingState : IState
+    public class ShootingState<T> : IState where T : EnemyController
     {
         public EnemyController Owner { get; set; }
-        private GenericStateMachine stateMachine;
+        private GenericStateMachine<T> stateMachine;
         private PlayerController target;
         private float shootTimer;
 
-        public ShootingState(GenericStateMachine stateMachine) => this.stateMachine = stateMachine;
+        public ShootingState(GenericStateMachine<T> stateMachine) => this.stateMachine = stateMachine;
 
         public void OnStateEnter()
         {
