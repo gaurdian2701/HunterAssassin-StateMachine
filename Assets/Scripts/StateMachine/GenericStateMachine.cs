@@ -38,6 +38,7 @@ namespace StatePattern.StateMachine
         ROTATING,
         SHOOTING,
         PATROLLING,
-        CHASING
+        CHASING,
+        TELEPORTING
     }
 }
