@@ -7,11 +7,11 @@ namespace StatePattern.Enemy
     public class PatrollingState : IState
     {
         public EnemyController Owner { get; set; }
-        private IStateMachine stateMachine;
+        private GenericStateMachine stateMachine;
         private int currentPatrollingIndex = -1;
         private Vector3 destination;
 
-        public PatrollingState(IStateMachine stateMachine) => this.stateMachine = stateMachine;
+        public PatrollingState(GenericStateMachine stateMachine) => this.stateMachine = stateMachine;
 
         public void OnStateEnter()
         {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace StatePattern.Enemy
 {
-    public class PatrolManStateMachine : IStateMachine
+    public class PatrolManStateMachine : GenericStateMachine
     {
         private PatrolManController Owner;
         private IState currentState;

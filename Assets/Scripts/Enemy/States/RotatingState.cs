@@ -6,10 +6,10 @@ namespace StatePattern.Enemy
     public class RotatingState : IState
     {
         public EnemyController Owner { get; set; }
-        private IStateMachine stateMachine;
+        private GenericStateMachine stateMachine;
         private float targetRotation;
 
-        public RotatingState(IStateMachine stateMachine) => this.stateMachine = stateMachine;
+        public RotatingState(GenericStateMachine stateMachine) => this.stateMachine = stateMachine;
 
         public void OnStateEnter() => targetRotation = (Owner.Rotation.eulerAngles.y + 180) % 360;
 

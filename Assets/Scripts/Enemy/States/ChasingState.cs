@@ -9,10 +9,10 @@ namespace StatePattern.Enemy
     public class ChasingState : IState
     {
         public EnemyController Owner { get; set; }
-        private IStateMachine stateMachine;
+        private GenericStateMachine stateMachine;
         private PlayerController target;
 
-        public ChasingState(IStateMachine stateMachine) => this.stateMachine = stateMachine;
+        public ChasingState(GenericStateMachine stateMachine) => this.stateMachine = stateMachine;
 
         public void OnStateEnter()
         {

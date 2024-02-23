@@ -6,10 +6,10 @@ namespace StatePattern.Enemy
     public class IdleState : IState
     {
         public EnemyController Owner { get; set; }
-        private IStateMachine stateMachine;
+        private GenericStateMachine stateMachine;
         private float timer;
 
-        public IdleState(IStateMachine stateMachine) => this.stateMachine = stateMachine;
+        public IdleState(GenericStateMachine stateMachine) => this.stateMachine = stateMachine;
 
         public void OnStateEnter() => ResetTimer();
 

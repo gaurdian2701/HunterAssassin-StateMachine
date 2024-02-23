@@ -8,11 +8,11 @@ namespace StatePattern.Enemy
     public class ShootingState : IState
     {
         public EnemyController Owner { get; set; }
-        private IStateMachine stateMachine;
+        private GenericStateMachine stateMachine;
         private PlayerController target;
         private float shootTimer;
 
-        public ShootingState(IStateMachine stateMachine) => this.stateMachine = stateMachine;
+        public ShootingState(GenericStateMachine stateMachine) => this.stateMachine = stateMachine;
 
         public void OnStateEnter()
         {
