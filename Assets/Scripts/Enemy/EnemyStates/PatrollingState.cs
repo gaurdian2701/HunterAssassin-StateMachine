@@ -18,7 +18,10 @@ public class PatrollingState : IState
     public void OnStateEnter()
     {
         GetNextPatrollingIndex();
-        currentDestination = Owner.Data.PatrollingPoints[currentPatrollingIndex];
+
+        if(currentPatrollingIndex >=0 && currentPatrollingIndex < Owner.Data.PatrollingPoints.Count)
+            currentDestination = Owner.Data.PatrollingPoints[currentPatrollingIndex];
+
         MoveTowardsDestination(currentDestination);
     }
 

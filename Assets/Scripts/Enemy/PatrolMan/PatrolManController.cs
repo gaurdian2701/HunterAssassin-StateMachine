@@ -11,7 +11,7 @@ public class PatrolManController : EnemyController
     {
         enemyView.SetController(this);
         CreateStateMachine();
-        stateMachine.ChangeState(States.PATROLLING);
+        stateMachine.ChangeState(States.IDLE);
     }
 
     private void CreateStateMachine() => stateMachine = new PatrolManStateMachine(this);
@@ -30,5 +30,5 @@ public class PatrolManController : EnemyController
         stateMachine.ChangeState(States.CHASING);
     }
 
-    public override void PlayerExitedRange() => stateMachine.ChangeState(States.PATROLLING);
+    public override void PlayerExitedRange() => stateMachine.ChangeState(States.IDLE);
 }
