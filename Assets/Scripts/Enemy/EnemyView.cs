@@ -16,9 +16,12 @@ namespace StatePattern.Enemy
         [SerializeField] private GameObject bloodStain;
         [SerializeField] private SpriteRenderer enemyGraphic;
 
+        private Color defaultColor;
+
         private void Start()
         {
             rangeTriggerCollider = GetComponent<SphereCollider>();
+            defaultColor = Color.white;
             Controller?.InitializeAgent();
         }
 
@@ -48,9 +51,14 @@ namespace StatePattern.Enemy
             }
             else
             {
-                enemyGraphic.color = Color.white;
+                enemyGraphic.color = defaultColor;
             }
         }
+
+        public void SetColor(Color color)
+        { enemyGraphic.color = color; }
+
+        public void SetDefaultColor(Color defaultColor) => this.defaultColor = defaultColor;
 
         private void Update() => Controller?.UpdateEnemy();
 

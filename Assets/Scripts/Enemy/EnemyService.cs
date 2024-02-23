@@ -63,6 +63,9 @@ namespace StatePattern.Enemy
                 case EnemyType.Hitman:
                     enemy = new HitmanController(enemyScriptableObject);
                     break;
+                case EnemyType.Robot:
+                    enemy = new CloneManController(enemyScriptableObject);
+                    break;
                 default:
                     enemy = new EnemyController(enemyScriptableObject);
                     break;
